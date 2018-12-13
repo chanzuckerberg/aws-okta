@@ -2,11 +2,12 @@
 
 
 [[projects]]
-  digest = "1:d937a7ad3ecc9a62355b31143a3f3a316fb1d6440304ec348696ef9fa0a74ed8"
+  branch = "master"
+  digest = "1:3cabbc710321c38791c277a984c9f8709469b1bbff1abf600e76f8960bfabd9c"
   name = "github.com/99designs/keyring"
   packages = ["."]
   pruneopts = "UT"
-  revision = "ccd0779e6f10beb398c339c6fe4557e709dbf40c"
+  revision = "ff690aee77e9b2c9631d43885d805f9b22817b82"
 
 [[projects]]
   branch = "master"
@@ -17,7 +18,7 @@
   revision = "25c3068a42a0b50b877953fb249dbcffc6bd1bca"
 
 [[projects]]
-  digest = "1:cfc74bd3e2a1c981c8312e8ab94590b77e96eac5e043f29009310efbd5517882"
+  digest = "1:8fcac8a5c34470bf957788d6dd198391ac9a8486043d418184a2c2d5d271fb4c"
   name = "github.com/aws/aws-sdk-go"
   packages = [
     "aws",
@@ -29,13 +30,20 @@
     "aws/credentials",
     "aws/credentials/ec2rolecreds",
     "aws/credentials/endpointcreds",
+    "aws/credentials/processcreds",
     "aws/credentials/stscreds",
+    "aws/csm",
     "aws/defaults",
     "aws/ec2metadata",
     "aws/endpoints",
     "aws/request",
     "aws/session",
     "aws/signer/v4",
+    "internal/ini",
+    "internal/sdkio",
+    "internal/sdkrand",
+    "internal/sdkuri",
+    "internal/shareddefaults",
     "private/protocol",
     "private/protocol/query",
     "private/protocol/query/queryutil",
@@ -44,7 +52,8 @@
     "service/sts",
   ]
   pruneopts = "UT"
-  revision = "3bc643c63c6f8716320182b6842581d6c80572fa"
+  revision = "a00e7512a2533cd96e525fe50607f9fe98badec3"
+  version = "v1.16.4"
 
 [[projects]]
   digest = "1:586992e81213a853bfe5c102709c0c92020d21b386907ceae783f13bbe899ad7"
@@ -55,7 +64,7 @@
   version = "v1.0.1"
 
 [[projects]]
-  digest = "1:2342b132173530ef03d5fb89c63b57026b0fa3ab74b0d9b85266f00b3c1cdeab"
+  digest = "1:92dfb1cad60fdfecac5def0f398e05b2b92d2422ac6ad2d7d8e4bdb6057a3d83"
   name = "github.com/dvsekhvalnov/jose2go"
   packages = [
     ".",
@@ -68,22 +77,16 @@
     "padding",
   ]
   pruneopts = "UT"
-  revision = "9f050a91b1f2663a30613ed12d728426599e1b2d"
+  revision = "f21a8cedbbae609f623613ec8f81125c243212e6"
+  version = "v1.3"
 
 [[projects]]
-  digest = "1:19ea97688477f0c05ef94e9ddf48c5a2d8837b4ba781a1014c068293dcca2e5b"
-  name = "github.com/go-ini/ini"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "f55231ca73a76c1d61eb05fe0d64a1ccebf93cba"
-  version = "v1.39.3"
-
-[[projects]]
-  digest = "1:db1a1be73659c9fb4387c45cb81ddff697aa31c1523ec0b61023ab103cdd16f6"
+  digest = "1:b3d20bcdedab2050e6bc58e52f4fdc46f710b4c74e1a1ecee262ebec1aee7b6e"
   name = "github.com/godbus/dbus"
   packages = ["."]
   pruneopts = "UT"
-  revision = "885f9cc04c9c1a6a61a2008e211d36c5737be3f5"
+  revision = "2ff6f7ffd60f0f2410b3105864bdd12c7894f844"
+  version = "v5.0.1"
 
 [[projects]]
   branch = "master"
@@ -102,19 +105,27 @@
   version = "v1.0"
 
 [[projects]]
-  digest = "1:b87714e57a511d88f307aba7d5b63522da12bed0a050889c81272fc50f71100e"
+  digest = "1:bb81097a5b62634f3e9fec1014657855610c82d19b9a40c17612e32651e35dca"
   name = "github.com/jmespath/go-jmespath"
   packages = ["."]
   pruneopts = "UT"
-  revision = "3433f3ea46d9f8019119e7dd41274e112a2359a9"
-  version = "0.2.2"
+  revision = "c2b33e84"
 
 [[projects]]
-  digest = "1:623ecae39198545c820dfb09f7ab7f70c1ca4726ae97d387e9c8a7375622fde0"
+  branch = "master"
+  digest = "1:00e5d2ab594acd9a96265e8e6a46bbf07f0cfcbe20f0e8e415eb80536b1b7ccf"
   name = "github.com/keybase/go-keychain"
   packages = ["."]
   pruneopts = "UT"
-  revision = "15d3657f24fc7e290714ab795239c5bb33b091ea"
+  revision = "f1daa725cce4049b1715f1e97d6a51880e401e70"
+
+[[projects]]
+  digest = "1:0a69a1c0db3591fcefb47f115b224592c8dfa4368b7ba9fae509d5e16cdc95c8"
+  name = "github.com/konsorten/go-windows-terminal-sequences"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "5c8c8bd35d3832f5d134ae1e1e375b69a4d25242"
+  version = "v1.0.1"
 
 [[projects]]
   branch = "master"
@@ -137,11 +148,12 @@
   revision = "2c1c4616a9e71d08897a583653abca4b4ac55028"
 
 [[projects]]
-  digest = "1:12ae6210bdbdad658a9a67fd95cd9c99f7fdbf12f6d36eaf0af704e69dacf4f5"
+  digest = "1:78bbb1ba5b7c3f2ed0ea1eab57bdd3859aec7e177811563edc41198a760b06af"
   name = "github.com/mitchellh/go-homedir"
   packages = ["."]
   pruneopts = "UT"
-  revision = "b8bc1bf767474819792c23f32d8286a45736f1c6"
+  revision = "ae18d6b8b3205b561c79e8e5f69bff09736185f4"
+  version = "v1.0.0"
 
 [[projects]]
   digest = "1:40e195917a951a8bf867cd05de2a46aaf1806c50cf92eebf4c16f78cd196f747"
@@ -152,11 +164,12 @@
   version = "v0.8.0"
 
 [[projects]]
-  digest = "1:4d68bd79874438a6208627fe037000f25dc7f5f0a606fa12f0e14058c904f41d"
+  digest = "1:e271becdebd3dd7c004d7977a15ebdd1f4fa19f2fa7122d13e1116e9444a3190"
   name = "github.com/segmentio/analytics-go"
   packages = ["."]
   pruneopts = "UT"
-  revision = "4f08212e9b32c48b4a4d20997d3f90dc0b56eba8"
+  revision = "1178b964a36694a8f9c161b19e6fe28cb37e8482"
+  version = "v3.0.0"
 
 [[projects]]
   branch = "master"
@@ -167,11 +180,12 @@
   revision = "204274ad699c0983a70203a566887f17a717fef4"
 
 [[projects]]
-  digest = "1:2c17871a23d3217774bee213cd8f5f248ad5e12f7eb6172c683ae00be93376ec"
+  digest = "1:69b1cc331fca23d702bd72f860c6a647afd0aa9fcbc1d0659b1365e26546dd70"
   name = "github.com/sirupsen/logrus"
   packages = ["."]
   pruneopts = "UT"
-  revision = "5e5dc898656f695e2a086b8e12559febbfc01562"
+  revision = "bcd833dfe83d3cebad139e4a29ed79cb2318bf95"
+  version = "v1.2.0"
 
 [[projects]]
   branch = "master"
@@ -182,19 +196,20 @@
   revision = "75fb7ed4208cf72d323d7d02fd1a5964a7a9073c"
 
 [[projects]]
-  digest = "1:aa72c27eaab9bedbbdd34565573bfa8b65b4aba56676276519f10c4d6c3a15bc"
+  digest = "1:645cabccbb4fa8aab25a956cbcbdf6a6845ca736b2c64e197ca7cbb9d210b939"
   name = "github.com/spf13/cobra"
   packages = ["."]
   pruneopts = "UT"
-  revision = "31694f19adeeaeb0a0e5fe95441b390d757753d2"
+  revision = "ef82de70bb3f60c65fb8eebacbb2d122ef517385"
+  version = "v0.0.3"
 
 [[projects]]
-  digest = "1:1b21a2b4058a779f290c7341cd93267492e0ecea6c8b54f64a4a5fd7ff131034"
+  digest = "1:c1b1102241e7f645bc8e0c22ae352e8f0dc6484b6cb4d132fa9f24174e0119e2"
   name = "github.com/spf13/pflag"
   packages = ["."]
   pruneopts = "UT"
-  revision = "e57e3eeb33f795204c1ca35f56c44f83227c6e66"
-  version = "v1.0.0"
+  revision = "298182f68c66c05229eb03ac171abe6e309ee79a"
+  version = "v1.0.3"
 
 [[projects]]
   branch = "master"
@@ -221,14 +236,16 @@
   revision = "a0b114877d4caeffbd7f87e3757c17fce570fea7"
 
 [[projects]]
-  digest = "1:9606ce8905fdfdd29f63fa7301b439d3fbaebccd19ee1c175ac41a1dc55008ad"
+  branch = "master"
+  digest = "1:38f553aff0273ad6f367cb0a0f8b6eecbaef8dc6cb8b50e57b6a81c1d5b1e332"
   name = "golang.org/x/crypto"
   packages = ["ssh/terminal"]
   pruneopts = "UT"
-  revision = "5f995c0d1c72642b4845a718a648d17fce6ed6fa"
+  revision = "505ab145d0a99da450461ae2c1a9f6cd10d1f447"
 
 [[projects]]
-  digest = "1:4b27e369ca722781e2ba13b17db50be782b7b10958d65a3c2da28c2ee37c5117"
+  branch = "master"
+  digest = "1:c054f06f4d9c70e11b956a72a1172caeca3167bd37a6301547bc6d1c63479a84"
   name = "golang.org/x/net"
   packages = [
     "html",
@@ -237,14 +254,41 @@
     "publicsuffix",
   ]
   pruneopts = "UT"
-  revision = "3e8a7b0329d536af18e227bb21b6da4d1dbbe180"
+  revision = "891ebc4b82d6e74f468c533b06f983c7be918a96"
 
 [[projects]]
-  digest = "1:c1fe40b20fa35dcc58b3a9d37064f955fff06f15e4af392d636c0ec0c08040df"
+  branch = "master"
+  digest = "1:ba8cbf57cfd92d5f8592b4aca1a35d92c162363d32aeabd5b12555f8896635e7"
   name = "golang.org/x/sys"
-  packages = ["unix"]
+  packages = [
+    "unix",
+    "windows",
+  ]
   pruneopts = "UT"
-  revision = "b4e289961544fc90f340c908c3460ceae6a2202a"
+  revision = "4d1cda033e0619309c606fc686de3adcf599539e"
+
+[[projects]]
+  digest = "1:a2ab62866c75542dd18d2b069fec854577a20211d7c0ea6ae746072a1dccdd18"
+  name = "golang.org/x/text"
+  packages = [
+    "collate",
+    "collate/build",
+    "internal/colltab",
+    "internal/gen",
+    "internal/tag",
+    "internal/triegen",
+    "internal/ucd",
+    "language",
+    "secure/bidirule",
+    "transform",
+    "unicode/bidi",
+    "unicode/cldr",
+    "unicode/norm",
+    "unicode/rangetable",
+  ]
+  pruneopts = "UT"
+  revision = "f21a4dfb5e38f5895301dc265a8def02365cc3d0"
+  version = "v0.3.0"
 
 [solve-meta]
   analyzer-name = "dep"
