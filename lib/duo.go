@@ -6,12 +6,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"net/url"
 	uniformResourceLocator "net/url"
 	"os"
 	"strings"
 
-	u2fhost "github.com/marshallbrekka/go-u2fhost"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/net/html"
@@ -221,71 +219,6 @@ func (d *DuoClient) DoAuth(tx string, inputSid string, inputCertsURL string) (si
 	} else {
 		err = fmt.Errorf("Request failed or followed redirect: %d", res.StatusCode)
 	}
-
-	return
-}
-
-// DoPrompt sends a POST request to the Duo /frame/promt endpoint
-//
-// The functions returns the Duo transaction ID which is different from
-// the Okta transaction ID
-func (d *DuoClient) DoU2FPromptFinish(sid string, sessionID string, resp *u2fhost.AuthenticateResponse) (txid string, err error) {
-	var (
-		req        *http.Request
-		promptData string
-	)
-
-	promptUrl := "https://" + d.Host + "/frame/prompt"
-
-	client := &http.Client{}
-
-	var respData = ResponseData{
-		SessionID:     sessionID,
-		KeyHandle:     resp.KeyHandle,
-		ClientData:    resp.ClientData,
-		SignatureData: resp.SignatureData,
-	}
-
-	respJSON, err := json.Marshal(respData)
-	if err != nil {
-		return
-	}
-
-	// Pick between device you want to use -- the flow are bit different depending on
-	// whether you want to use a token or a phone of some sort
-	// it may make sense to make a selector in CLI similar to the Okta UI but
-	// I'm not certain that belongs here
-	if d.Device == "u2f" {
-		promptData = "sid=" + sid + "&device=u2f_token&factor=u2f_finish&out_of_date=False&days_out_of_date=0&response_data=" + url.QueryEscape(string(respJSON))
-	} else {
-		err = fmt.Errorf("U2F Prompt final only applies to u2f devices, not %s", d.Device)
-		return
-	}
-
-	req, err = http.NewRequest("POST", promptUrl, bytes.NewReader([]byte(promptData)))
-	if err != nil {
-		return
-	}
-
-	req.Header.Add("Origin", "https://"+d.Host)
-	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Add("X-Requested-With", "XMLHttpRequest")
-
-	res, err := client.Do(req)
-	if err != nil {
-		return
-	}
-	defer res.Body.Close()
-
-	if res.StatusCode != http.StatusOK {
-		err = fmt.Errorf("Prompt request failed: %d", res.StatusCode)
-		return
-	}
-
-	var status PromptResp
-	err = json.NewDecoder(res.Body).Decode(&status)
-
-	txid = status.Response.Txid
 
 	return
 }
