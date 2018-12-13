@@ -4,21 +4,16 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
+	"net/url"
+	uniformResourceLocator "net/url"
 	"os"
 	"strings"
-	"time"
-
-	log "github.com/sirupsen/logrus"
-
-	"net/url"
 
 	u2fhost "github.com/marshallbrekka/go-u2fhost"
-
-	uniformResourceLocator "net/url"
-
+	"github.com/pkg/errors"
+	log "github.com/sirupsen/logrus"
 	"golang.org/x/net/html"
 )
 
@@ -113,8 +108,6 @@ func (d *DuoClient) getTrustedFacet(appId string) (facetResponse *FacetResponse,
 // TODO: Use a Context to gracefully shutdown the thing and have a nice timeout
 func (d *DuoClient) ChallengeU2f(verificationHost string) (err error) {
 	var sid, tx, txid, auth string
-	var status = StatusResp{}
-
 	tx = strings.Split(d.Signature, ":")[0]
 
 	sid, err = d.DoAuth(tx, "", "")
@@ -127,80 +120,16 @@ func (d *DuoClient) ChallengeU2f(verificationHost string) (err error) {
 		return
 	}
 
-	auth, status, err = d.DoStatus(txid, sid)
+	auth, _, err = d.DoStatus(txid, sid)
 	if err != nil {
 		return
 	}
 
-	if status.Response.StatusCode == "u2f_sent" {
-		var response *u2fhost.AuthenticateResponse
-		allDevices := u2fhost.Devices()
-		// Filter only the devices that can be opened.
-		openDevices := []u2fhost.Device{}
-		for i, device := range allDevices {
-			err := device.Open()
-			if err == nil {
-				openDevices = append(openDevices, allDevices[i])
-				defer func(i int) {
-					allDevices[i].Close()
-				}(i)
-			}
-		}
-		if len(openDevices) == 0 {
-			return errors.New("no open u2f devices")
-		}
-
-		var (
-			err error
-		)
-		prompted := false
-		timeout := time.After(time.Second * 25)
-		interval := time.NewTicker(time.Millisecond * 250)
-		facet := "https://" + verificationHost
-		log.Debugf("Facet: %s", facet)
-		var req = &u2fhost.AuthenticateRequest{
-			Challenge: status.Response.U2FSignRequest[0].Challenge,
-			AppId:     status.Response.U2FSignRequest[0].AppID,
-			KeyHandle: status.Response.U2FSignRequest[0].KeyHandle,
-			Facet:     facet,
-		}
-		defer interval.Stop()
-		for {
-			if response != nil {
-				break
-			}
-			select {
-			case <-timeout:
-				fmt.Println("Failed to get registration response after 25 seconds")
-				break
-			case <-interval.C:
-				for _, device := range openDevices {
-					response, err = device.Authenticate(req)
-					if err == nil {
-						log.Printf("Authentication succeeded, continuing")
-					} else if _, ok := err.(*u2fhost.TestOfUserPresenceRequiredError); ok {
-						if !prompted {
-							fmt.Println("Touch the flashing U2F device to authenticate...")
-							fmt.Println()
-						}
-						prompted = true
-					} else {
-						fmt.Printf("Got status response %#v\n", err)
-						break
-					}
-				}
-			}
-		}
-		//log.Debugf("response: %#v", response)
-		//if response != nil {
-		txid, err = d.DoU2FPromptFinish(sid, status.Response.U2FSignRequest[0].SessionID, response)
-		if err != nil {
-			return fmt.Errorf("Failed on U2F_final. Err: %s", err)
-		}
-		//}
-	}
-
 	log.Printf("Device: %s", d.Device)
+
+	if d.Device == "u2f" || d.Device == "token" {
+		return errors.Errorf("%s device unsupported", d.Device)
+	}
 
 	// So, turns out that if you call DoStatus in
 	// Duo's token mode, it will return an auth token
